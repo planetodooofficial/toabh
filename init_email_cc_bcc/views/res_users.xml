@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="res_users_view_out_mail_server_form" model="ir.ui.view">
+            <field name="name">res.users.out.form.inherit</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='preferences']" position="after">
+                    <group string="Outgoing Mail Servers">
+                        <field name="outgoing_smtp_user" force_save="1" placeholder="...@hi-fab.com"/>
+                        <field name="outgoing_smtp_pass"  password="True" force_save="1" />
+                        <field name="mail_server_id"  force_save="1" />
+                        <field name="incoming_fetch_mail_server_id"  force_save="1" />
+                    </group>
+                </xpath>
+            </field>
+        </record>
+        <record id="action_confirm_res_users" model="ir.actions.server">
+            <field name="name">Create Incoming Mail Server</field>
+            <field name="model_id" ref="base.model_res_users"/>
+            <field name="binding_model_id" ref="base.model_res_users"/>
+            <field name="binding_view_types">list</field>
+            <field name="state">code</field>
+            <field name="code">action = records.create_incoming_mail_server()</field>
+        </record>
+    </data>
+</odoo>

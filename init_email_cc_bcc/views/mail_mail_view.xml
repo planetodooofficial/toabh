@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="init_mail_mail_form_bcc" model="ir.ui.view">
+        <field name="name">init.mail.mail.form.bcc</field>
+        <field name="model">mail.mail</field>
+        <field name="inherit_id" ref="mail.view_mail_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='email_cc']" position="after">
+                <field name="email_bcc"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="init_mail_template_form_cc" model="ir.ui.view">
+        <field name="name">init.mail.template.form.cc</field>
+        <field name="model">mail.template</field>
+        <field name="inherit_id" ref="mail.email_template_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='email_cc']" position="after">
+                <field name="cc_ids"  widget="many2many_tags_email" placeholder="Add contacts to notify..."
+                                context="{'force_email':True, 'show_email':True}"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
