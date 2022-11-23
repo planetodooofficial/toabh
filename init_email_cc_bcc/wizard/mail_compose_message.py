@@ -33,5 +33,5 @@ class MailComposer(models.TransientModel):
 
     def _onchange_template_id(self, template_id, composition_mode, model, res_id):
         values = super(MailComposer, self)._onchange_template_id(template_id, composition_mode, model, res_id)
-        values['value'].update({'cc_ids':self.template_id.cc_ids})
+        values['value'].update({'cc_ids': self.template_id.cc_ids})
         return values
