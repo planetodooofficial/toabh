@@ -1,23 +1,26 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import api, models, _,fields
+from odoo import api, models, _, fields
 from odoo.exceptions import UserError
 
 
 class Users(models.Model):
     _inherit = "res.users"
 
-    outgoing_smtp_user = fields.Char(string='Username', help="Optional username for Outgoing Mail Servers authentication",copy=False)
-    outgoing_smtp_pass = fields.Char(string='Password', help="Optional password for Outgoing Mail Servers authentication",copy=False)
+    outgoing_smtp_user = fields.Char(string='Username',
+                                     help="Optional username for Outgoing Mail Servers authentication", copy=False)
+    outgoing_smtp_pass = fields.Char(string='Password',
+                                     help="Optional password for Outgoing Mail Servers authentication", copy=False)
     mail_server_id = fields.Many2one('ir.mail_server', 'Outgoing Mail Server', copy=False, readonly=True)
-    incoming_fetch_mail_server_id = fields.Many2one('fetchmail.server', 'Incoming Mail Server', copy=False, readonly=True)
+    incoming_fetch_mail_server_id = fields.Many2one('fetchmail.server', 'Incoming Mail Server', copy=False,
+                                                    readonly=True)
 
     @api.model
     def create(self, vals):
-        if vals.get('outgoing_smtp_user',False) and vals.get('outgoing_smtp_pass', False):
+        if vals.get('outgoing_smtp_user', False) and vals.get('outgoing_smtp_pass', False):
             mail_server_id = self.env['ir.mail_server'].create({
-                'name': str(vals['name'])+' Outgoing Mail Servers',
+                'name': str(vals['name']) + ' Outgoing Mail Servers',
                 'from_filter': str(vals['outgoing_smtp_user']).strip(''),
                 'smtp_host': 'smtp.gmail.com',
                 'smtp_port': 465,
@@ -33,7 +36,7 @@ class Users(models.Model):
         return res
 
     def write(self, values):
-        print('self',self._context)
+        print('self', self._context)
         if not self.mail_server_id:
             mail_server_id = self.env['ir.mail_server'].sudo().search(
                 [('smtp_user', '=', self.login), ('from_filter', '=', self.login)])
@@ -70,7 +73,6 @@ class Users(models.Model):
             #     'password': user.outgoing_smtp_pass,
             # })
             if user.mail_server_id and not user.incoming_fetch_mail_server_id:
-
                 mail_server_id = self.env['fetchmail.server'].create({
                     'name': str(user.name) + ' Incoming Mail Servers IMAP',
                     'server_type': 'imap',

@@ -5,11 +5,79 @@
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
-
+            <xpath expr="//notebook/page[@name='order_lines']" position="attributes">
+                <attribute name="string">Talent &amp; Payments</attribute>
+            </xpath>
             <xpath expr="//field[@name='order_line']/tree/field[@name='product_id']" position="after">
                 <field name="vendor_id" options="{'no_create': True}"/>
             </xpath>
-
+            <xpath expr="//field[@name='order_line']/tree/field[@name='product_id']" position="attributes">
+                <attribute name="string">Talent</attribute>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/tree/field[@name='product_uom_qty']" position="attributes">
+                <attribute name="string">Days</attribute>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/tree/field[@name='price_unit']" position="attributes">
+                <attribute name="string">Amount</attribute>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/tree/field[@name='product_template_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='payment_term_id']" position="after">
+                <field name="weekly_id"/>
+                <field name="usage_country_id"/>
+            </xpath>
+            <xpath expr="//field[@name='sale_order_template_id']" position="after">
+                <h6>
+                    <strong>Job Dates</strong>
+                </h6>
+                <div class="o_row" style="width:600%% !important;">
+                    <span class="text-muted">
+                        <strong>From</strong>
+                    </span>
+                    <field name="job_date_start" class="oe_inline"/>
+                    <span class="text-muted">
+                        <strong>To</strong>
+                    </span>
+                    <field name="job_date_end" class="oe_inline"/>
+                </div>
+                <field name="job_location" string="Job Location"/>
+                <!-- travel dates    -->
+                <h6>
+                    <strong>Travel Dates</strong>
+                </h6>
+                <div class="o_row" style="width:600%% !important;">
+                    <span class="text-muted">
+                        <strong>From</strong>
+                    </span>
+                    <field name="travel_dates_start" class="oe_inline"/>
+                    <span class="text-muted">
+                        <strong>To</strong>
+                    </span>
+                    <field name="travel_dates_end" class="oe_inline"/>
+                </div>
+                <!--  exclusivity field -->
+                <field name="exclusive" string="Exclusivity" widget="radio"/>
+                <field name="brands_id" attrs="{'invisible': [('exclusive','!=','y')]}"/>
+            </xpath>
+            <xpath expr="//field[@name='weekly_id']" position="after">
+                <h6>
+                    <strong>Usage Period</strong>
+                </h6>
+                <div class="o_row" style="width:500%% !important;">
+                    <span class="text-muted">
+                        <strong>From</strong>
+                    </span>
+                    <field name="usage_start" class="oe_inline"/>
+                    <span class="text-muted">
+                        <strong>To</strong>
+                    </span>
+                    <field name="usage_end" class="oe_inline"/>
+                </div>
+            </xpath>
+            <xpath expr="//field[@name='partner_id']" position="attributes">
+                <attribute name="string">Client Contact</attribute>
+            </xpath>
         </field>
     </record>
 </odoo>

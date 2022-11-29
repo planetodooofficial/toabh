@@ -6,9 +6,12 @@
     'sequence': 10,
     'category': 'Customizations',
     'website': 'https://www.planet-odoo.com/',
-    'depends': ['sale', 'purchase'],
+    'depends': ['sale', 'purchase', 'crm', 'account'],
     'data': [
+        'security/ir.model.access.csv',
         'views/sales_purchase.xml',
+        'views/weekly_appearance_master.xml',
+        'views/brands_master.xml'
     ],
     'installable': True,
     'application': True,

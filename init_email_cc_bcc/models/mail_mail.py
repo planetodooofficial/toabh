@@ -13,7 +13,7 @@ _logger = logging.getLogger(__name__)
 
 
 class MailTemplate(models.Model):
-    "Templates for sending email"
+    """Templates for sending email"""
     _inherit = "mail.template"
 
     cc_ids = fields.Many2many(
