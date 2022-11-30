@@ -1,0 +1,11 @@
+<!--<?xml version="1.0" encoding="utf-8"?>-->
+<!--<odoo>-->
+<!--    <data>-->
+<!--&lt;!&ndash;        <record id="shop_managers_user_rule" model="ir.rule">&ndash;&gt;-->
+<!--&lt;!&ndash;            <field name="name">Shops for corresponding managers only</field>&ndash;&gt;-->
+<!--&lt;!&ndash;            <field name="model_id" ref="model_mail_activity"/>&ndash;&gt;-->
+<!--&lt;!&ndash;            <field name="domain_force">['|',('user_id','=',user.id),('user_id','=',False)]</field>&ndash;&gt;-->
+<!--&lt;!&ndash;            <field name="groups" eval="[(4,ref('base.group_user'))]"/>&ndash;&gt;-->
+<!--&lt;!&ndash;        </record>&ndash;&gt;-->
+<!--    </data>-->
+<!--</odoo>-->

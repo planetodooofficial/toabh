@@ -11,7 +11,8 @@
         'security/ir.model.access.csv',
         'views/sales_purchase.xml',
         'views/weekly_appearance_master.xml',
-        'views/brands_master.xml'
+        'views/brands_master.xml',
+        'views/crm_activities.xml',
     ],
     'installable': True,
     'application': True,
