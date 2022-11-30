@@ -3,6 +3,7 @@ from odoo import fields, models, api
 
 class SaleOrderInherit(models.Model):
     _inherit = 'sale.order'
+
     weekly_id = fields.Many2one("weekly.appearance", "Week/Appearance/Performance/Film")
     partner_id = fields.Many2one("res.partner", 'Client Contact')
     brands_id = fields.Many2one("competitive.brands", "Competitive Brands")
@@ -13,6 +14,7 @@ class SaleOrderInherit(models.Model):
     usage_start = fields.Date("usage_start")
     usage_end = fields.Date("usage_end")
     job_location = fields.Char()
+    # added
     usage_country_id = fields.Many2one("res.country", string="Usage Country")
     exclusive = fields.Selection([("y", "Yes"), ("n", "No")], default="n")
 
