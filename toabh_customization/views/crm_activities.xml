@@ -15,11 +15,18 @@
         </field>
     </record>
 
+    <record id="mail_activity_action_crm" model="ir.actions.act_window">
+        <field name="name">All Activities</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">mail.activity</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
     <menuitem
             id="menu_crm_activities_custom"
-            name="Activities"
+            name="All Activities"
             parent="crm.crm_menu_sales"
-            action="mail.mail_activity_action"
+            action="mail_activity_action_crm"
             sequence="0"
     />
 
