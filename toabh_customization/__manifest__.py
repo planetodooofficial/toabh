@@ -8,7 +8,7 @@
     'website': 'https://www.planet-odoo.com/',
     'depends': ['sale', 'purchase', 'crm', 'account'],
     'data': [
-        'security/ir.model.access.csv',
+        'security/ir.model.access.csv', 
         'views/sales_purchase.xml',
         'views/weekly_appearance_master.xml',
         'views/brands_master.xml',
