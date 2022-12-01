@@ -16,8 +16,6 @@ class SaleOrderInherit(models.Model):
     usage_country_id = fields.Many2one("res.country", string="Usage Country")
     exclusive = fields.Selection([("y", "Yes"), ("n", "No")], default="n")
 
-    # talent_ids = fields.One2many('talents.pay', 'connection_id', string='Talents')
-
     @api.model
     def default_get(self, fields_list):
         res = super().default_get(fields_list)

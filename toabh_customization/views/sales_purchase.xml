@@ -8,14 +8,14 @@
             <xpath expr="//notebook/page[@name='order_lines']" position="attributes">
                 <attribute name="string">Talent &amp; Payments</attribute>
             </xpath>
-            <xpath expr="//field[@name='order_line']/tree/field[@name='product_id']" position="after">
-                <field name="vendor_id" options="{'no_create': True}"/>
+            <xpath expr="//field[@name='order_line']/tree/field[@name='product_id']" position="before">
+                <field name="vendor_id" options="{'no_create': True}" string="Talent"/>
             </xpath>
             <xpath expr="//field[@name='order_line']/tree/field[@name='product_id']" position="attributes">
-                <attribute name="string">Talent</attribute>
+                <attribute name="string">Product</attribute>
             </xpath>
-            <xpath expr="//field[@name='order_line']/tree/field[@name='product_uom_qty']" position="attributes">
-                <attribute name="string">Days</attribute>
+            <xpath expr="//field[@name='order_line']/tree/field[@name='product_uom_qty']" position="replace">
+                <field name="product_uom_qty" string="Days"/>
             </xpath>
             <xpath expr="//field[@name='order_line']/tree/field[@name='price_unit']" position="attributes">
                 <attribute name="string">Amount</attribute>
