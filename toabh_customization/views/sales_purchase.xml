@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <record id="sale_order_form_inherit" model="ir.ui.view">
         <field name="name">sale_order_form_inherit</field>
@@ -11,14 +11,14 @@
             <xpath expr="//field[@name='order_line']/tree/field[@name='product_id']" position="before">
                 <field name="vendor_id" options="{'no_create': True}" string="Talent"/>
             </xpath>
-            <xpath expr="//field[@name='order_line']/tree/field[@name='product_id']" position="attributes">
-                <attribute name="string">Product</attribute>
+            <xpath expr="//field[@name='order_line']/tree/field[@name='product_id']" position="replace">
+                <field name="product_id" string="Product"/>
             </xpath>
             <xpath expr="//field[@name='order_line']/tree/field[@name='product_uom_qty']" position="replace">
                 <field name="product_uom_qty" string="Days"/>
             </xpath>
-            <xpath expr="//field[@name='order_line']/tree/field[@name='price_unit']" position="attributes">
-                <attribute name="string">Amount</attribute>
+            <xpath expr="//field[@name='order_line']/tree/field[@name='price_unit']" position="replace">
+                <field name="price_unit" string="Amount"/>
             </xpath>
             <xpath expr="//field[@name='order_line']/tree/field[@name='product_template_id']" position="attributes">
                 <attribute name="invisible">1</attribute>
