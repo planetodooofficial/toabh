@@ -21,7 +21,7 @@ class SaleOrderInherit(models.Model):
     @api.model
     def default_get(self, fields_list):
         res = super().default_get(fields_list)
-        # print(res)
+        # print(res)#
         res['note'] = "<strong>Note</strong> :-<br>" \
                       "Shoot duration is 12 hrs including hair & makeup and local travel to shoot location " \
                       "All payments need to be cleared within 15 days of shoot."
