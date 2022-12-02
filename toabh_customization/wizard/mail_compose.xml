@@ -10,14 +10,14 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='notify']" position="after">
                 <field name="use_active_domain" invisible="1"/>
-                <label for="partner_ids" string="CC" attrs="{'invisible': [('is_log', '=', True)]}" groups="base.group_user"/>
+                <label for="cc_ids" string="CC" attrs="{'invisible': [('is_log', '=', True)]}" groups="base.group_user"/>
                 <div groups="base.group_user" attrs="{'invisible': [('is_log', '=', True)]}">
                     <span attrs="{'invisible': [('composition_mode', '!=', 'mass_mail')]}">
                         <strong>Email mass mailing</strong> on
                         <span attrs="{'invisible': [('use_active_domain', '=', True)]}">the selected records</span>
                         <span attrs="{'invisible': [('use_active_domain', '=', False)]}">the current search filter</span>.
                     </span>
-                    <field name="cc_ids" widget="many2many_tags_email" placeholder="Add contacts..." context="{'force_email':True, 'show_email':True}" attrs="{'invisible': [('composition_mode', '!=', 'comment')]}"/>
+                    <field name="cc_ids" widget="many2many_tags_email" placeholder="Add CC..." context="{'force_email':True, 'show_email':True}" attrs="{'invisible': [('composition_mode', '!=', 'comment')]}"/>
                 </div>
 <!--                <label for="partner_ids" string="BCC" attrs="{'invisible': [('is_log', '=', True)]}" groups="base.group_user"/>-->
 <!--                <div groups="base.group_user" attrs="{'invisible': [('is_log', '=', True)]}">-->

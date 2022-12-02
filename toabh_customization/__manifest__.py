@@ -13,6 +13,7 @@
         'views/weekly_appearance_master.xml',
         'views/brands_master.xml',
         'views/crm_activities.xml',
+        'wizard/mail_compose.xml',
     ],
     'installable': True,
     'application': True,
