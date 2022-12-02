@@ -22,7 +22,7 @@
         # groups
 
         # views
-        'views/mail_mail_view.xml',
+        # 'views/mail_mail_view.xml',
         'views/mail_compose_message_view.xml',
 
         # wizard
