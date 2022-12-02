@@ -5,20 +5,12 @@ import logging
 import psycopg2
 import smtplib
 import re
-from odoo import _, fields, models, api
+
+from odoo import _, fields, models
 from odoo import tools
 from odoo.addons.base.models.ir_mail_server import MailDeliveryException
 
 _logger = logging.getLogger(__name__)
-
-
-class MailTemplate(models.Model):
-    """Templates for sending email"""
-    _inherit = "mail.template"
-
-    cc_ids = fields.Many2many(
-        'res.partner', 'mail_compose_message_res_partner_cc_temp_rel',
-        'temp_id', 'partner_id', 'CC Contacts')
 
 
 class MailMail(models.Model):
@@ -119,8 +111,7 @@ class MailMail(models.Model):
                         # -- INIT_EMAIL_CC_BCC
                         email_bcc=tools.email_split(mail.email_bcc),
                         # INIT_EMAIL_CC_BCC --
-                        # reply_to=mail.reply_to,
-                        reply_to=mail.email_from,
+                        reply_to=mail.reply_to,
                         attachments=attachments,
                         message_id=mail.message_id,
                         references=mail.references,

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from odoo import _, fields, models, api
+from odoo import _, fields, models
 
 
 class MailComposer(models.TransientModel):
@@ -24,14 +24,3 @@ class MailComposer(models.TransientModel):
             result[id]["email_bcc"] = ",".join(bcc_emails)
 
         return result
-
-    @api.model
-    def default_get(self, fields):
-        values = super(MailComposer, self).default_get(fields)
-        values.update({'cc_ids':self.template_id.cc_ids})
-        return values
-
-    def _onchange_template_id(self, template_id, composition_mode, model, res_id):
-        values = super(MailComposer, self)._onchange_template_id(template_id, composition_mode, model, res_id)
-        values['value'].update({'cc_ids': self.template_id.cc_ids})
-        return values

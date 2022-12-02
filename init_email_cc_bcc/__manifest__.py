@@ -14,7 +14,7 @@
     We show CC/BCC input in compose email wizard, so that user can send email with CC/BCC recipients
     """,
     'depends': [
-        "mail","base"
+        "mail"
     ],
     'data': [
         # data
@@ -23,7 +23,6 @@
 
         # views
         'views/mail_mail_view.xml',
-        'views/res_users.xml',
         'views/mail_compose_message_view.xml',
 
         # wizard
