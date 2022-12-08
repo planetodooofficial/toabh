@@ -8,7 +8,7 @@
         <field name="model">mail.compose.message</field>
         <field name="inherit_id" ref="mail.email_compose_message_wizard_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='notify']" position="after">
+            <xpath expr="//field[@name='subject']" position="before">
                 <field name="use_active_domain" invisible="1"/>
                 <label for="cc_ids" string="CC" attrs="{'invisible': [('is_log', '=', True)]}" groups="base.group_user"/>
                 <div groups="base.group_user" attrs="{'invisible': [('is_log', '=', True)]}">
