@@ -1,3 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_weekly_appearance,access.weekly.appearance,model_weekly_appearance,,1,1,1,1
-access_competitive_brands,access.competitive.brands,model_competitive_brands,,1,1,1,1
