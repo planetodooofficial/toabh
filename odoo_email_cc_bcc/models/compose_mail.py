@@ -118,7 +118,7 @@ class MailComposer(models.TransientModel):
                 'email_bcc': self.email_bcc,
                 'email_cc': self.email_cc,
                 'cc_recipient_ids': self.cc_recipient_ids,
-                'bcc_recipient_ids': self.bcc_recipient_ids,
+                'bcc_recipient_id`s': self.bcc_recipient_ids,
             })
         return results
 
@@ -247,14 +247,14 @@ class Mail(models.Model):
     _inherit = "mail.mail"
 
     def _send_prepare_values(self, partner=None):
-        result = super(Mail,self)._send_prepare_values(partner)
+        result = super(Mail, self)._send_prepare_values(partner)
         if self._context.get('cc'):
             if partner:
-                result['email_cc'] =[tools.formataddr((partner.name or 'False', partner.email or 'False'))]
+                result['email_cc'] = [tools.formataddr((partner.name or 'False', partner.email or 'False'))]
             else:
                 result['email_cc'] = tools.email_split_and_format(self.email_cc)
             if partner:
-                result['email_bcc'] =[tools.formataddr((partner.name or 'False', partner.email or 'False'))]
+                result['email_bcc'] = [tools.formataddr((partner.name or 'False', partner.email or 'False'))]
             else:
                 result['email_bcc'] = tools.email_split_and_format(self.email_bcc)
         return result
@@ -291,12 +291,12 @@ class Mail(models.Model):
                 cc_list = []
                 bcc_list = []
                 cc_email_list = []
-                if mail.email_to:
-                    email_list.append(mail._send_prepare_values())
-                for partner in mail.recipient_ids:
-                    values = mail._send_prepare_values(partner=partner)
-                    values['partner_id'] = partner
-                    email_list.append(values)
+                # if mail.email_to:
+                #     email_list.append(mail._send_prepare_values())
+                # for partner in mail.recipient_ids:
+                #     values = mail._send_prepare_values(partner=partner)
+                #     values['partner_id'] = partner
+                #     email_list.append(values)
                 for partner in mail.cc_recipient_ids:
                     cc_list += mail._send_prepare_values(
                     partner=partner).get('email_to')
@@ -348,43 +348,44 @@ class Mail(models.Model):
                 res = None
                 # TDE note: could be great to pre-detect missing to/cc and skip sending it
                 # to go directly to failed state update
-                for email in email_list:
-                    if email.get('email_to'):
-                        msg = IrMailServer.build_email(
-                            email_from=mail.email_from,
-                            email_to=email.get('email_to'),
-                            subject=mail.subject,
-                            body=email.get('body'),
-                            body_alternative=email.get('body_alternative'),
-                            email_cc=tools.email_split(mail.email_cc) + cc_list,
-                            email_bcc=tools.email_split(mail.email_bcc) + bcc_list,
-                            reply_to=mail.reply_to,
-                            attachments=attachments,
-                            message_id=mail.message_id,
-                            references=mail.references,
-                            object_id=mail.res_id and ('%s-%s' % (mail.res_id, mail.model)),
-                            subtype='html',
-                            subtype_alternative='plain',
-                            headers=headers)
-                        processing_pid = email.pop("partner_id", None)
-                        try:
-                            res = IrMailServer.send_email(
-                                msg, mail_server_id=mail.mail_server_id.id, smtp_session=smtp_session)
-                            if processing_pid:
-                                success_pids.append(processing_pid)
-                            processing_pid = None
-                        except AssertionError as error:
-                            if str(error) == IrMailServer.NO_VALID_RECIPIENT:
-                                failure_type = "RECIPIENT"
-                                # No valid recipient found for this particular
-                                # mail item -> ignore error to avoid blocking
-                                # delivery to next recipients, if any. If this is
-                                # the only recipient, the mail will show as failed.
-                                _logger.info("Ignoring invalid recipients for mail.mail %s: %s",
-                                            mail.message_id, email.get('email_to'))
-                            else:
-                                raise
-                if not email_list and cc_email_list:
+                if mail.partner_ids:
+                    body = mail._send_prepare_body()
+                    body_alternative = tools.html2plaintext(body)
+                    msg = IrMailServer.build_email(
+                        email_from=mail.email_from,
+                        email_to=",".join(mail.partner_ids.mapped('email')),
+                        subject=mail.subject,
+                        body=body,
+                        body_alternative=body_alternative,
+                        email_cc=tools.email_split(mail.email_cc) + cc_list,
+                        email_bcc=tools.email_split(mail.email_bcc) + bcc_list,
+                        reply_to=mail.reply_to,
+                        attachments=attachments,
+                        message_id=mail.message_id,
+                        references=mail.references,
+                        object_id=mail.res_id and ('%s-%s' % (mail.res_id, mail.model)),
+                        subtype='html',
+                        subtype_alternative='plain',
+                        headers=headers)
+                    processing_pid = mail.partner_ids[0]
+                    try:
+                        res = IrMailServer.send_email(
+                            msg, mail_server_id=mail.mail_server_id.id, smtp_session=smtp_session)
+                        if processing_pid:
+                            success_pids.append(processing_pid)
+                        processing_pid = None
+                    except AssertionError as error:
+                        if str(error) == IrMailServer.NO_VALID_RECIPIENT:
+                            failure_type = "RECIPIENT"
+                            # No valid recipient found for this particular
+                            # mail item -> ignore error to avoid blocking
+                            # delivery to next recipients, if any. If this is
+                            # the only recipient, the mail will show as failed.
+                            _logger.info("Ignoring invalid recipients for mail.mail %s: %s",
+                                        mail.message_id, mail.partner_ids.mapped('email'))
+                        else:
+                            raise
+                if not mail.partner_ids and cc_email_list:
                     for email in cc_email_list:
                         msg = IrMailServer.build_email(
                             email_from=mail.email_from,
