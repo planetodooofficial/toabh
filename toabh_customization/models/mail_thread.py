@@ -3,7 +3,8 @@ import logging
 import datetime
 import email
 from xmlrpc import client as xmlrpclib
-
+import poplib
+poplib._MAXLINE = 165536
 _logger = logging.getLogger(__name__)
 
 
@@ -46,7 +47,6 @@ class MailThread(models.AbstractModel):
         # extract message bytes - we are forced to pass the message as binary because
         # we don't know its encoding until we parse its headers and hence can't
         # convert it to utf-8 for transport between the mailgate script and here.
-        print("Inherited Function is running")
         if isinstance(message, xmlrpclib.Binary):
             message = bytes(message.data)
         if isinstance(message, str):
