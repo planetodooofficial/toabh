@@ -133,6 +133,7 @@ class MailComposer(models.TransientModel):
         # Therefore, we can set the description in the context from the beginning to avoid falling
         # back on the regular display_name retrieved in '_notify_prepare_template_context'.
         model_description = self._context.get('model_description')
+        result_mails_su, result_messages = self.env['mail.mail'].sudo(), self.env['mail.message']
         for wizard in self:
             # Duplicate attachments linked to the email.template.
             # Indeed, basic mail.compose.message wizard duplicates attachments in mass
@@ -194,9 +195,11 @@ class MailComposer(models.TransientModel):
                             **mail_values)
                         if ActiveModel._name == 'mail.thread' and wizard.model:
                             post_params['model'] = wizard.model
-                        ActiveModel.browse(res_id).message_post(**post_params)
+                        result_messages += ActiveModel.browse(res_id).message_post(**post_params)
+                result_mails_su += batch_mails_sudo
                 if wizard.composition_mode == 'mass_mail':
                     batch_mails_sudo.send(auto_commit=auto_commit)
+        return result_mails_su, result_messages
 
 
 class Message(models.Model):
@@ -516,7 +519,6 @@ class Thread(models.AbstractModel):
                 'notification_status': 'ready',
             } for recipient_id in tocreate_recipient_ids]
         return email, notif_create_values
-
 
     def _notify_thread_by_email(self, message, recipients_data, msg_vals=False,
                                 mail_auto_delete=True, # mail.mail
